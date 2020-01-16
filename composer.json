@@ -1,0 +1,13 @@
+{
+    "name": "azatnizam/email",
+    "description": "Email validator",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Azat Nizameev",
+            "email": "azat.nizam@gmail.com"
+        }
+    ],
+    "require": {}
+}
