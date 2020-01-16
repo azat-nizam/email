@@ -9,5 +9,10 @@
             "email": "azat.nizam@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Azatnizam\\Email\\": "src/"
+        }
+    }
 }
