@@ -1,0 +1,6 @@
+{
+    "validators": [
+        "Azatnizam\\Email\\ValidatorByStr",
+        "Azatnizam\\Email\\ValidatorByDns"
+    ]
+}

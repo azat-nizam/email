@@ -2,28 +2,41 @@
 namespace Azatnizam\Email;
 
 class Validator {
+    /**
+     * Validate email by all rules defined in config
+     * @param string $email
+     * @return bool
+     */
+    public function validateAll(string $email) {
+        /** If validator undefined */
+        $status = null;
 
-    public function validate(string $email) {
-        return $this->validateByString($email) && $this->validateByDns($email);
-    }
+        $arValidators = $this->getValidatorsList();
 
-    protected function validateByString(string $email) {
-        return preg_match('/.+@.+\..+/i', $email);
+        /** Initial value */
+        if ( count($arValidators) > 0 ) {
+            $status = true;
+        }
+
+        foreach ($arValidators as $validator) {
+            $objValidator = new $validator;
+
+            if ($objValidator instanceof IValidator) {
+               $status =  $status && $objValidator->validate($email);
+            }
+        }
+
+        return $status;
     }
 
     /**
-     * @param string $email
-     * @return bool
-     * Extract domain from email and check it MX record
+     * Return array of validators Class names
+     * @return mixed
      */
-    protected function validateByDns(string $email) {
-        $arValidate = explode('@', $email);
+    protected function getValidatorsList() {
+        $config = file_get_contents(dirname(__DIR__) . '/config.json');
 
-        if ( count($arValidate) < 2 ) {
-            return false;
-        }
-
-        return getmxrr($arValidate[1], $arMXHosts);
+        return json_decode($config)->validators;
     }
 
 }
